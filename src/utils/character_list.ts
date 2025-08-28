@@ -417,7 +417,7 @@ export default {
     "charName": "Rubia",
     "costumeName": "Maid Bikini",
     "spine": "char000807",
-    "cutscene": "",
+    "cutscene": "cutscene_char000807",
     "dating": ""
   },
   "001001": {

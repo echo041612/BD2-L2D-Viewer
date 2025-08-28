@@ -1,5 +1,12 @@
 export default [
   {
+    "date": "28/08/2025",
+    "changes": [
+      "Added Rubia: Maid Bikini character icon.",
+      "Added Rubia: Maid Bikini ultimate animation."
+    ]
+  },
+  {
     "date": "16/08/2025",
     "changes": [
       "Fixed scrollbar style in the changelog modal.",
