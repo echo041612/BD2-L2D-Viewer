@@ -1,5 +1,16 @@
 export default [
   {
+    "date": "17/12/2025",
+    "changes": [
+      "Added Darian: Bittersweet Bunny, Tyr: Innocent Bunny, Eleaneer: Shadow Bunny, Zenith: Stranger Bunny and Wilhelmina: Frozen Queen character icons.",
+      "Added Darian: Bittersweet Bunny, Tyr: Innocent Bunny, Eleaneer: Shadow Bunny, Zenith: Stranger Bunny and Wilhelmina: Frozen Queen standing animations.",
+      "Added Darian: Bittersweet Bunny, Eleaneer: Shadow Bunny, Zenith: Stranger Bunny, Wilhelmina: Frozen Queen, Celia: The Curse, Justia: Knight of Blood and Rafina: Steel Engine ultimate animations.",
+      "Added Eclipse: Nightmare Bunny and Zenith: Stranger Bunny fated guests animations.",
+      "Added badges displaying available animation categories for each character.",
+      "As always, if you like my work and want to support me so I can keep working on adding more features and improving the site you can do so by clicking in the coffee icon in the navigation bar."
+    ]
+  },
+  {
     "date": "20/11/2025",
     "changes": [
       "Added Olivier: Faithful Wings character icon.",

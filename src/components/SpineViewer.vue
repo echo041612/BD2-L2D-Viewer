@@ -110,6 +110,11 @@ const store = useCharacterStore()
 const props = defineProps<{ mobileOverlayActive?: boolean }>()
 const showingMobileOverlay = computed(() => props.mobileOverlayActive ?? false)
 
+const selectedCharacter = computed(() => store.characters.find(c => c.id === store.selectedCharacterId) || null)
+const selectedCharacterUsesDatingTracks = computed(
+  () => store.animationCategory === 'dating' && !!selectedCharacter.value?.datingUsesTracks,
+)
+
 const editingBackground = ref(false)
 const backgroundImage = reactive({
   src: '' as string,
@@ -200,6 +205,85 @@ let defaultZoom = 0
 
 let offset = new Vector2()
 let size = new Vector2()
+
+function getMixIndex(animationName: string): number | null {
+  const match = /^mix(\d+)/i.exec(animationName)
+  if (!match) return null
+  const index = Number(match[1])
+  return Number.isFinite(index) ? index : null
+}
+
+function shouldUseDatingTracksForAnimation(animationName: string | null | undefined) {
+  if (!selectedCharacterUsesDatingTracks.value) return false
+  if (!animationName) return false
+  return getMixIndex(animationName) !== null
+}
+
+function getActiveTrackIndexForSelectedAnimation(state: SpinePlayer['animationState'] | null | undefined) {
+  const anim = store.selectedAnimation
+  if (!state || !anim) return 0
+
+  if (shouldUseDatingTracksForAnimation(anim)) {
+    const entry1 = state.getCurrent(1)
+    if (entry1?.animation?.name === anim) return 1
+  }
+  return 0
+}
+
+function setSpineAnimation(
+  p: SpinePlayer,
+  animationName: string,
+  options: { loop: boolean; forceNoMix?: boolean } = { loop: true },
+) {
+  const state = p.animationState
+  if (!state) return
+
+  const wantsTracks = shouldUseDatingTracksForAnimation(animationName)
+  const mixIndex = getMixIndex(animationName)
+
+  const useNoMix = options.forceNoMix || selectedCharacterUsesDatingTracks.value
+
+  if (wantsTracks && mixIndex !== null) {
+    const idleName = `idle${mixIndex}`
+    const available = new Set(state.data.skeletonData.animations.map(a => a.name))
+    if (available.has(animationName) && available.has(idleName)) {
+      state.clearTrack(0)
+      state.clearTrack(1)
+
+      p.skeleton?.setToSetupPose()
+      p.skeleton?.updateWorldTransform()
+
+      const idleEntry = state.setAnimation(0, idleName, true)
+      const mixEntry = state.setAnimation(1, animationName, options.loop)
+
+      if (idleEntry) {
+        idleEntry.trackEnd = Number.MAX_VALUE
+      }
+
+      if (useNoMix) {
+        for (const entry of [idleEntry, mixEntry]) {
+          if (!entry) continue
+          entry.mixDuration = 0
+          entry.mixTime = 0
+        }
+      }
+      return
+    }
+  }
+
+  if (selectedCharacterUsesDatingTracks.value) {
+    state.clearTrack(0)
+    state.clearTrack(1)
+  } else {
+    state.clearTrack(1)
+  }
+
+  const entry = state.setAnimation(0, animationName, options.loop)
+  if (useNoMix && entry) {
+    entry.mixDuration = 0
+    entry.mixTime = 0
+  }
+}
 
 function isBackgroundSlot(name: string) {
   const normalized = name.toLowerCase()
@@ -689,7 +773,8 @@ async function load() {
         cam.update()
       }
       if (player && store.playing) {
-        const entry = player.animationState?.getCurrent(0)
+        const trackIndex = getActiveTrackIndexForSelectedAnimation(player.animationState)
+        const entry = player.animationState?.getCurrent(trackIndex)
         if (entry && entry.animation) {
           const d = entry.animation.duration
           if (d > 0) {
@@ -713,7 +798,7 @@ async function load() {
           store.selectedAnimation = names[0]
         }
         if (store.selectedAnimation) {
-          p.setAnimation(store.selectedAnimation, true)
+          setSpineAnimation(p, store.selectedAnimation, { loop: true })
           if (store.playing) {
             p.play()
           } else {
@@ -868,7 +953,7 @@ watch(() => store.selectedAnimation, anim => {
   }
   progress.value = 0
   if (player && anim) {
-    player.setAnimation(anim, true)
+    setSpineAnimation(player, anim, { loop: true })
     store.playing = true
     player.play()
   }
@@ -934,7 +1019,8 @@ onBeforeUnmount(() => {
 
 function seek() {
   if (!player) return
-  const entry = player.animationState?.getCurrent(0)
+  const trackIndex = getActiveTrackIndexForSelectedAnimation(player.animationState)
+  const entry = player.animationState?.getCurrent(trackIndex)
   if (entry && entry.animation && player.skeleton) {
     const newTime = entry.animationEnd * progress.value
     entry.trackTime = newTime
@@ -1102,11 +1188,8 @@ function exportAnimation(transparent: boolean): Promise<void> {
       )
       if (anim) duration = anim.duration
       state.clearTrack(0)
-      const entry = p.setAnimation(animName, true)
-      if (entry) {
-        entry.mixDuration = 0
-        entry.mixTime = 0
-      }
+      state.clearTrack(1)
+      setSpineAnimation(p, animName, { loop: true, forceNoMix: true })
       if (skeleton) {
         state.apply(skeleton)
         skeleton.updateWorldTransform()
@@ -1182,11 +1265,8 @@ function exportAnimationFrames(transparent: boolean): Promise<void> {
       )
       if (anim) duration = anim.duration
       state.clearTrack(0)
-      const entry = p.setAnimation(animName, false)
-      if (entry) {
-        entry.mixDuration = 0
-        entry.mixTime = 0
-      }
+      state.clearTrack(1)
+      setSpineAnimation(p, animName, { loop: false, forceNoMix: true })
       if (skeleton) {
         state.apply(skeleton)
         skeleton.updateWorldTransform()
@@ -1234,7 +1314,9 @@ function exportAnimationFrames(transparent: boolean): Promise<void> {
           cam.zoom = prevZoom
           cam.update()
         }
-        p.setAnimation(animName, true)
+        if (animName) {
+          setSpineAnimation(p, animName, { loop: true })
+        }
         p.animationState?.apply(p.skeleton!)
         p.skeleton!.updateWorldTransform()
         if (wasPlaying) {

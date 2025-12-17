@@ -136,7 +136,7 @@ export default {
     "charName": "Celia",
     "costumeName": "The Curse",
     "spine": "char101601",
-    "cutscene": "",
+    "cutscene": "cutscene_char101601",
     "dating": ""
   },
   "103201": {
@@ -227,7 +227,7 @@ export default {
     "charName": "Justia",
     "costumeName": "Knight of Blood",
     "spine": "char000201",
-    "cutscene": "",
+    "cutscene": "cutscene_char000201",
     "dating": ""
   },
   "000202": {
@@ -376,7 +376,9 @@ export default {
     "costumeName": "Nightmare Bunny",
     "spine": "char000706",
     "cutscene": "cutscene_char000706",
-    "dating": ""
+    "dating": "illust_dating11",
+    "datingHasNoBg": false,
+    "datingUsesTracks": true
   },
   "000707": {
     "charName": "Eclipse",
@@ -673,11 +675,25 @@ export default {
     "cutscene": "cutscene_char004001",
     "dating": ""
   },
+  "004002": {
+    "charName": "Darian",
+    "costumeName": "Bittersweet Bunny",
+    "spine": "char004002",
+    "cutscene": "cutscene_char004002",
+    "dating": ""
+  },
   "004101": {
     "charName": "Tyr",
     "costumeName": "Starlight Guardian",
     "spine": "char004101",
     "cutscene": "cutscene_char004101",
+    "dating": ""
+  },
+  "004102": {
+    "charName": "Tyr",
+    "costumeName": "Innocent Bunny",
+    "spine": "char004102",
+    "cutscene": "",
     "dating": ""
   },
   "020001": {
@@ -824,7 +840,7 @@ export default {
     "charName": "Rafina",
     "costumeName": "Steel Engine",
     "spine": "char060701",
-    "cutscene": "",
+    "cutscene": "cutscene_char060701",
     "dating": ""
   },
   "060702": {
@@ -883,6 +899,13 @@ export default {
     "cutscene": "cutscene_char061102",
     "dating": ""
   },
+  "061103": {
+    "charName": "Eleaneer",
+    "costumeName": "Shadow Bunny",
+    "spine": "char061103",
+    "cutscene": "cutscene_char061103",
+    "dating": ""
+  },
   "061302": {
     "charName": "Dalvi",
     "costumeName": "Bright Moon",
@@ -910,6 +933,15 @@ export default {
     "spine": "char061404",
     "cutscene": "cutscene_char061404",
     "dating": ""
+  },
+  "061492": {
+    "charName": "Zenith",
+    "costumeName": "Stranger Bunny",
+    "spine": "char061492",
+    "cutscene": "cutscene_char061492",
+    "dating": "illust_dating12",
+    "datingHasNoBg": false,
+    "datingUsesTracks": true
   },
   "062001": {
     "charName": "Andrew",
@@ -1149,6 +1181,13 @@ export default {
     "cutscene": "cutscene_char067603",
     "dating": "illust_dating6"
   },
+  "067604": {
+    "charName": "Wilhelmina",
+    "costumeName": "Frozen Queen",
+    "spine": "char067604",
+    "cutscene": "cutscene_char067604",
+    "dating": ""
+  },
   "minigame1": {
     "charName": "Minigame",
     "costumeName": "Slap Slap Pop",
@@ -1162,5 +1201,6 @@ export default {
   spine: string,
   cutscene: string,
   dating: string,
-  datingHasNoBg?: boolean
+  datingHasNoBg?: boolean,
+  datingUsesTracks?: boolean
 } }

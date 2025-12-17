@@ -10,6 +10,7 @@ export interface Character {
   cutscene: string
   dating: string
   datingHasNoBg?: boolean,
+  datingUsesTracks?: boolean,
   customFiles?: {
     skel?: string,
     json?: string,
@@ -21,6 +22,7 @@ export interface Character {
 const characterArray: Character[] = Object.entries(character_list).map(([id, char]) => ({
   id,
   datingHasNoBg: true,
+  datingUsesTracks: false,
   ...char,
 }))
 
