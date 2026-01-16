@@ -183,7 +183,7 @@ export default {
   },
   "000101": {
     "charName": "Lathel",
-    "costumeName": "Medicinal Herb Tracker",
+    "costumeName": "Herb Tracker",
     "spine": "char000101",
     "cutscene": "cutscene_char000101",
     "dating": ""
@@ -654,6 +654,14 @@ export default {
     "cutscene": "cutscene_char003802",
     "dating": ""
   },
+  "003892": {
+    "charName": "Liberta",
+    "costumeName": "Hedonist",
+    "spine": "char003892",
+    "cutscene": "cutscene_char003892",
+    "dating": "illust_dating14",
+    "datingHasNoBg": false
+  },
   "003901": {
     "charName": "Sonya",
     "costumeName": "Shadowed Dream",
@@ -811,14 +819,14 @@ export default {
     "dating": ""
   },
   "060501": {
-    "charName": "Anatasia",
+    "charName": "Anastasia",
     "costumeName": "Gentle Maid",
     "spine": "char060501",
     "cutscene": "cutscene_char060501",
     "dating": ""
   },
   "060502": {
-    "charName": "Anatasia",
+    "charName": "Anastasia",
     "costumeName": "Fire Graffiti",
     "spine": "char060502",
     "cutscene": "cutscene_char060502",
@@ -1188,6 +1196,20 @@ export default {
     "costumeName": "Frozen Queen",
     "spine": "char067604",
     "cutscene": "cutscene_char067604",
+    "dating": ""
+  },
+  "067701": {
+    "charName": "Granadair",
+    "costumeName": "Shrine Maiden of Purification",
+    "spine": "char067701",
+    "cutscene": "cutscene_char067701",
+    "dating": ""
+  },
+  "067702": {
+    "charName": "Granadair",
+    "costumeName": "Queen of Gluttis",
+    "spine": "char067702",
+    "cutscene": "cutscene_char067702",
     "dating": ""
   },
   "minigame1": {

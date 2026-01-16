@@ -1,5 +1,17 @@
 export default [
   {
+    "date": "16/01/2026",
+    "changes": [
+      "Updated Blade: Onsen Swordfighter standing model.",
+      "Added Liberta: Hedonist, Granadair: Shrine Maiden of Purification, Granadair: Queen of Gluttis and Blade: Onsen Swordfighter character icons.",
+      "Added Liberta: Hedonist, Granadair: Shrine Maiden of Purification and Granadair: Queen of Gluttis standing animations.",
+      "Added Liberta: Hedonist, Granadair: Shrine Maiden of Purification and Granadair: Queen of Gluttis ultimate animations.",
+      "Added Liberta: Hedonist fated guests animations.",
+      "Fixed some localization issues: Anatasia -> Anastasia, Lathel: Medicinal Herb Tracker -> Lathel: Herb Tracker",
+      "As always, if you like my work and want to support me so I can keep working on adding more features and improving the site you can do so by clicking in the coffee icon in the navigation bar."
+    ]
+  },
+  {
     "date": "30/12/2025",
     "changes": [
       "Added Tyr: Innocent Bunny ultimate animation.",
