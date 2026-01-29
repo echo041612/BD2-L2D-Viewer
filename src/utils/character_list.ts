@@ -264,6 +264,7 @@ export default {
     "spine": "char000296",
     "cutscene": "cutscene_char000296",
     "dating": "illust_dating7",
+    "datingUsesTracks": true,
     "datingHasNoBg": false
   },
   "000301": {
@@ -448,7 +449,8 @@ export default {
     "costumeName": "Bikini Agent",
     "spine": "char001006",
     "cutscene": "cutscene_char001006",
-    "dating": "illust_dating8"
+    "dating": "illust_dating8",
+    "datingUsesTracks": true
   },
   "001101": {
     "charName": "Teresse",
@@ -462,7 +464,8 @@ export default {
     "costumeName": "Medical Club",
     "spine": "char001106",
     "cutscene": "cutscene_char001106",
-    "dating": "illust_dating4"
+    "dating": "illust_dating4",
+    "datingUsesTracks": true
   },
   "001107": {
     "charName": "Teresse",
@@ -477,6 +480,7 @@ export default {
     "spine": "char001197",
     "cutscene": "cutscene_char001197",
     "dating": "illust_dating9",
+    "datingUsesTracks": true,
     "datingHasNoBg": false
   },
   "001201": {
@@ -547,7 +551,8 @@ export default {
     "costumeName": "Celebrity Bunny",
     "spine": "char003203",
     "cutscene": "cutscene_char003203",
-    "dating": "illust_dating3"
+    "dating": "illust_dating3",
+    "datingUsesTracks": true
   },
   "003301": {
     "charName": "Nebris",
@@ -568,7 +573,8 @@ export default {
     "costumeName": "New Hire",
     "spine": "char003303",
     "cutscene": "cutscene_char003303",
-    "dating": "illust_dating1"
+    "dating": "illust_dating1",
+    "datingUsesTracks": true
   },
   "003401": {
     "charName": "Morpeah",
@@ -582,7 +588,8 @@ export default {
     "costumeName": "Daydream Bunny",
     "spine": "char003402",
     "cutscene": "cutscene_char003402",
-    "dating": "illust_dating2"
+    "dating": "illust_dating2",
+    "datingUsesTracks": true
   },
   "003403": {
     "charName": "Morpeah",
@@ -630,7 +637,7 @@ export default {
     "charName": "Blade",
     "costumeName": "Onsen Swordfighter",
     "spine": "char003702",
-    "cutscene": "",
+    "cutscene": "cutscene_char003702",
     "dating": ""
   },
   "003703": {
@@ -660,6 +667,7 @@ export default {
     "spine": "char003892",
     "cutscene": "cutscene_char003892",
     "dating": "illust_dating14",
+    "datingUsesTracks": true,
     "datingHasNoBg": false
   },
   "003901": {
@@ -879,7 +887,8 @@ export default {
     "costumeName": "Code Name O",
     "spine": "char060802",
     "cutscene": "cutscene_char060802",
-    "dating": "illust_dating5"
+    "dating": "illust_dating5",
+    "datingUsesTracks": true
   },
   "061001": {
     "charName": "Helena",
@@ -1028,7 +1037,8 @@ export default {
     "costumeName": "Neon Savior",
     "spine": "char066403",
     "cutscene": "cutscene_char066403",
-    "dating": "illust_dating10"
+    "dating": "illust_dating10",
+    "datingUsesTracks": true
   },
   "066801": {
     "charName": "Refithea",
@@ -1084,7 +1094,9 @@ export default {
     "costumeName": "Onsen Practitioner",
     "spine": "char067004",
     "cutscene": "cutscene_char067004",
-    "dating": ""
+    "dating": "illust_dating15",
+    "datingHasNoBg": false,
+    "datingUsesTracks": true
   },
   "067101": {
     "charName": "Granhildr",
@@ -1189,7 +1201,8 @@ export default {
     "costumeName": "Water Park Queen",
     "spine": "char067603",
     "cutscene": "cutscene_char067603",
-    "dating": "illust_dating6"
+    "dating": "illust_dating6",
+    "datingUsesTracks": true
   },
   "067604": {
     "charName": "Wilhelmina",

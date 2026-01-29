@@ -1,5 +1,15 @@
 export default [
   {
+    "date": "29/01/2026",
+    "changes": [
+      "Added Blade: Onsen Swordfighter ultimate animation.",
+      "Added Ventana: Onsen Practitioner fated guest animations.",
+      "Fixed the standing animation for Sylvia: The Sword Queen.",
+      "Fixed mixed3_X_4 animations in Nebris: New Hire fated guests where her face would not render (probably fixed some other fated guests with this change)",
+      "As always, if you like my work and want to support me so I can keep working on adding more features and improving the site you can do so by clicking in the coffee icon in the navigation bar."
+    ]
+  },
+  {
     "date": "16/01/2026",
     "changes": [
       "Updated Blade: Onsen Swordfighter standing model.",
