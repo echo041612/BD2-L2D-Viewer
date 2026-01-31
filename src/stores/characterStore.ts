@@ -39,5 +39,7 @@ export const useCharacterStore = defineStore('characterStore', {
     useCurrentCamera: false,
     showDatingBg: true,
     customBackgroundImage: null as string | null,
+    layerNames: [] as string[],
+    layerVisibility: {} as Record<string, boolean>,
   }),
 })

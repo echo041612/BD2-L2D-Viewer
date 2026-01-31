@@ -43,6 +43,14 @@
             <span class="absolute left-1/2 -top-2 -translate-x-1/2 border-4 border-transparent border-b-white"></span>
           </div>
         </a>
+        <a
+          href="https://www.patreon.com/cw/jelosus1"
+          target="_blank"
+          rel="noopener"
+          title="Support on Patreon"
+        >
+          <PatreonIcon class="w-5 h-5 md:w-7 md:h-7" />
+        </a>
         <button class="cursor-pointer" @click="showChangelog = true" title="Changelog">
           <ChangelogIcon class="w-5 h-5 md:w-7 md:h-7" />
         </button>
@@ -132,6 +140,16 @@
             >Support!</span
           >
         </a>
+        <a
+          href="https://www.patreon.com/cw/jelosus1"
+          target="_blank"
+          rel="noopener"
+          class="flex items-center gap-2"
+          @click="closeMobileMenu"
+        >
+          <PatreonIcon class="w-5 h-5" />
+          <span>Patreon</span>
+        </a>
       </div>
     </div>
 
@@ -158,6 +176,7 @@ import ChangelogIcon from '@/components/icons/ChangelogIcon.vue'
 import PlusIcon from '@/components/icons/PlusIcon.vue'
 import MenuIcon from '@/components/icons/MenuIcon.vue'
 import KoFiIcon from '@/components/icons/KoFiIcon.vue'
+import PatreonIcon from '@/components/icons/PatreonIcon.vue'
 import BgUploadIcon from '@/components/icons/BgUploadIcon.vue'
 import BgResetIcon from '@/components/icons/BgResetIcon.vue'
 
@@ -270,7 +289,6 @@ onMounted(() => {
   }
 })
 </script>
-
 
 
 

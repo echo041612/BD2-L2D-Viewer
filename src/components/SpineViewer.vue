@@ -94,6 +94,13 @@ import BgEditIcon from '@/components/icons/BgEditIcon.vue'
 import BgToggleIcon from '@/components/icons/BgToggleIcon.vue'
 
 type ResizeHandle = 'n' | 'ne' | 'e' | 'se' | 's' | 'sw' | 'w' | 'nw'
+type SpineSlot = {
+  data: { name: string; color?: { a: number }; darkColor?: { a: number } }
+  color?: { a: number }
+  darkColor?: { a: number }
+  setAttachment?: (attachment: unknown) => void
+  attachment?: unknown
+}
 
 const container = ref<HTMLDivElement | null>(null)
 const viewerWrapper = ref<HTMLDivElement | null>(null)
@@ -202,6 +209,7 @@ let exportingFrames = false
 let manualCamera: OrthoCamera | null = null
 let defaultCameraPos = new Vector2()
 let defaultZoom = 0
+const previousLayerVisibility = new Map<string, boolean>()
 
 let offset = new Vector2()
 let size = new Vector2()
@@ -384,6 +392,37 @@ function computeCameraBounds(skeleton: SpineSkeleton | null) {
   }
 
   return { offset: fallbackOffset, size: fallbackSize }
+}
+
+function applyLayerVisibility(skeleton: SpineSkeleton | null) {
+  if (!skeleton) return
+  const visibility = store.layerVisibility
+  const slots = skeleton.slots as unknown as SpineSlot[]
+  for (const slot of slots) {
+    const name = slot.data?.name
+    if (!name) continue
+    if (visibility[name] === false) {
+      if (slot.color) slot.color.a = 0
+      if (slot.darkColor) slot.darkColor.a = 0
+    }
+  }
+}
+
+function restoreLayerAlphas(skeleton: SpineSkeleton | null, slotName: string) {
+  if (!skeleton) return
+  const slots = skeleton.slots as unknown as SpineSlot[]
+  const slot = slots.find(item => item.data?.name === slotName)
+  if (!slot) return
+  if (slot.color) {
+    const baseAlpha = slot.data?.color?.a
+    slot.color.a = typeof baseAlpha === 'number' ? baseAlpha : 1
+  }
+  if (slot.darkColor) {
+    const baseAlpha = slot.data?.darkColor?.a
+    if (typeof baseAlpha === 'number') {
+      slot.darkColor.a = baseAlpha
+    }
+  }
 }
 
 function stopPointerTracking(event?: PointerEvent) {
@@ -702,6 +741,27 @@ watch(editingBackground, value => {
   updateCanvasPointerEvents()
 })
 
+watch(
+  () => store.layerVisibility,
+  () => {
+    if (!player || !player.skeleton || !player.animationState) return
+    const skeleton = player.skeleton
+    player.animationState.apply(skeleton)
+    skeleton.updateWorldTransform()
+    const current = store.layerVisibility
+    for (const name of Object.keys(current)) {
+      const isVisible = current[name] !== false
+      const wasVisible = previousLayerVisibility.get(name)
+      if (wasVisible === false && isVisible) {
+        restoreLayerAlphas(skeleton, name)
+      }
+      previousLayerVisibility.set(name, isVisible)
+    }
+    ;(player as unknown as SpinePlayerInternal).drawFrame(false)
+  },
+  { deep: true },
+)
+
 watch(viewerWrapper, value => {
   if (value) ensureResizeObserver()
 })
@@ -715,6 +775,8 @@ async function load() {
 
   const char = store.characters.find(c => c.id === store.selectedCharacterId)
   if (!char) return
+  store.layerNames = []
+  store.layerVisibility = {}
 
   const ANIMATION_TYPE_BASE_PATH = {
     character: char.spine,
@@ -785,6 +847,7 @@ async function load() {
           }
         }
       }
+      applyLayerVisibility(player?.skeleton ?? null)
     },
     success: (p: SpinePlayer) => {
       const skeleton = p.skeleton ?? null
@@ -795,6 +858,11 @@ async function load() {
       emit('animations', names)
       const skinNames = skeleton?.data.skins.map(s => s.name) || []
       emit('skins', skinNames)
+      const slotNames = skeleton?.data.slots.map(slot => slot.name) || []
+      store.layerNames = slotNames
+      store.layerVisibility = Object.fromEntries(slotNames.map(name => [name, true]))
+      previousLayerVisibility.clear()
+      slotNames.forEach(name => previousLayerVisibility.set(name, true))
 
       const selectAnimation = () => {
         if (!store.selectedAnimation || !names.includes(store.selectedAnimation)) {

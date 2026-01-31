@@ -1,25 +1,73 @@
 <template>
-  <div class="w-full lg:w-64 lg:h-full bg-gray-800 text-white flex flex-col min-h-0">
-    <div class="flex-1 min-h-0 px-2 hidden lg:flex flex-col gap-2">
-      <span class="pt-2">Skins</span>
-      <select
-        v-model="store.selectedSkin"
-        class="bg-gray-700 text-white"
-      >
-        <option v-for="skin in skins" :key="skin" :value="skin">{{ skin }}</option>
-      </select>
-      <span>Animations</span>
-      <div class="overflow-y-auto sidebar-scroll flex-1">
-        <div
-          v-for="name in animations"
-          :key="name"
-          class="py-2 pl-2 cursor-pointer"
-          :class="{ 'bg-gray-700': name === selectedAnimation }"
-          @click="select(name)"
-        >
-          {{ name }}
+  <div class="w-full lg:w-64 lg:h-full max-h-dvh lg:max-h-none overflow-hidden lg:overflow-visible bg-gray-800 text-white flex flex-col min-h-0">
+    <div class="flex-1 min-h-0 px-2 flex flex-col gap-2">
+      <div class="pt-2">
+        <div class="inline-flex bg-gray-700/70 rounded-md p-1 gap-1">
+          <button
+            class="px-3 py-1 rounded text-sm transition-colors"
+            :class="sidebarTab === 'controls' ? 'bg-gray-600 text-white' : 'text-gray-300 hover:text-white'"
+            @click="sidebarTab = 'controls'"
+          >
+            Controls
+          </button>
+          <button
+            class="px-3 py-1 rounded text-sm transition-colors"
+            :class="sidebarTab === 'layers' ? 'bg-gray-600 text-white' : 'text-gray-300 hover:text-white'"
+            @click="sidebarTab = 'layers'"
+          >
+            Layers
+          </button>
         </div>
       </div>
+      <template v-if="sidebarTab === 'controls'">
+        <div class="hidden lg:flex flex-col gap-2 min-h-0">
+          <span>Skins</span>
+          <select
+            v-model="store.selectedSkin"
+            class="bg-gray-700 text-white"
+          >
+            <option v-for="skin in skins" :key="skin" :value="skin">{{ skin }}</option>
+          </select>
+          <span>Animations</span>
+          <div class="overflow-y-auto sidebar-scroll flex-1">
+            <div
+              v-for="name in animations"
+              :key="name"
+              class="py-2 pl-2 cursor-pointer"
+              :class="{ 'bg-gray-700': name === selectedAnimation }"
+              @click="select(name)"
+            >
+              {{ name }}
+            </div>
+          </div>
+        </div>
+      </template>
+      <template v-else>
+        <span>Layers</span>
+        <input
+          v-model="layerFilter"
+          type="text"
+          placeholder="Filter layers..."
+          class="bg-gray-700 text-white rounded px-2 py-1 text-sm"
+        />
+        <div class="overflow-y-auto sidebar-scroll flex-1 min-h-0">
+          <div v-if="!filteredLayerNames.length" class="text-sm text-gray-400 px-2 py-2">
+            No layers found.
+          </div>
+          <label
+            v-for="layer in filteredLayerNames"
+            :key="layer"
+            class="flex items-center gap-2 py-1 px-2 rounded cursor-pointer hover:bg-gray-700"
+          >
+            <input
+              type="checkbox"
+              :checked="isLayerVisible(layer)"
+              @change="toggleLayer(layer)"
+            />
+            <span class="truncate">{{ layer }}</span>
+          </label>
+        </div>
+      </template>
     </div>
     <div class="lg:mt-auto flex flex-col">
       <div v-if="!currentChar?.customFiles" class="p-2">
@@ -165,6 +213,8 @@ const transparentBg = ref(false)
 const showExportMenu = ref(false)
 const desktopExportRef = ref<HTMLElement | null>(null)
 const mobileExportRef = ref<HTMLElement | null>(null)
+const sidebarTab = ref<'controls' | 'layers'>('controls')
+const layerFilter = ref('')
 
 const emit = defineEmits(['select', 'reset-camera', 'screenshot', 'export-animation', 'category-change'])
 
@@ -197,6 +247,21 @@ function handleClickOutside(e: MouseEvent) {
 const selectedAnimation = computed(() => store.selectedAnimation)
 const toggleLabel = computed(() => (store.playing ? 'Pause' : 'Play'))
 const currentChar = computed(() => store.characters.find(c => c.id === store.selectedCharacterId))
+const layerNames = computed(() => [...store.layerNames].sort((a, b) => a.localeCompare(b)))
+const filteredLayerNames = computed(() => {
+  const query = layerFilter.value.trim().toLowerCase()
+  if (!query) return layerNames.value
+  return layerNames.value.filter(name => name.toLowerCase().includes(query))
+})
+
+function isLayerVisible(name: string) {
+  const value = store.layerVisibility[name]
+  return value !== false
+}
+
+function toggleLayer(name: string) {
+  store.layerVisibility[name] = !isLayerVisible(name)
+}
 
 watch(() => store.animationCategory, () => {
   emit('category-change');

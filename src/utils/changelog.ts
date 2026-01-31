@@ -1,5 +1,13 @@
 export default [
   {
+    "date": "31/01/2026",
+    "changes": [
+      "Added a section to play with the model layers.",
+      "Opened a Patreon account, you can find it in the navigation bar.",
+      "As always, if you like my work and want to support me so I can keep working on adding more features and improving the site you can do so by donating in either my Ko-Fi or Patreon <3."
+    ]
+  },
+  {
     "date": "29/01/2026",
     "changes": [
       "Added Blade: Onsen Swordfighter ultimate animation.",
