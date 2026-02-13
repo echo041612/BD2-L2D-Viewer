@@ -1,5 +1,14 @@
 export default [
   {
+    "date": "13/02/2026",
+    "changes": [
+      "Updated Ventana: Onsen Practitioner fated guest model with the newest one that removes the black bars.",
+      "Added Diana: Magical Innovator and Olivier: Retired Legend standing animations.",
+      "Added Diana: Magical Innovator ultimate animations.",
+      "Added Diana: Magical Innovator character icon."
+    ]
+  },
+  {
     "date": "31/01/2026",
     "changes": [
       "Added a section to play with the model layers.",

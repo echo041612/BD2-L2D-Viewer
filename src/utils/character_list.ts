@@ -511,6 +511,13 @@ export default {
     "cutscene": "cutscene_char002401",
     "dating": ""
   },
+  "002403": {
+    "charName": "Diana",
+    "costumeName": "Magical Innovator",
+    "spine": "char002403",
+    "cutscene": "cutscene_char002403",
+    "dating": ""
+  },
   "002406": {
     "charName": "Diana",
     "costumeName": "Anti-dystopia",
@@ -624,6 +631,13 @@ export default {
     "costumeName": "Fallen Wings",
     "spine": "char003603",
     "cutscene": "cutscene_char003603",
+    "dating": ""
+  },
+  "003604": {
+    "charName": "Olivier",
+    "costumeName": "Retired Legend",
+    "spine": "char003604",
+    "cutscene": "",
     "dating": ""
   },
   "003701": {
